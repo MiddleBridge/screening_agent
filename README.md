@@ -6,6 +6,20 @@ Reads inbound pitch emails (Gmail + PDF deck), runs multi-gate screening against
 
 Built for a CEE-focused seed fund mandate (configurable in `config/fund_thesis.py`).
 
+## Demo (this is not plug-and-play)
+
+The pipeline is a **local CLI**: it expects your own **API keys** and (for full flow) **Gmail OAuth** + **Notion** tokens in `.env`. There is no hosted “Try it” button — reviewers should treat the files below as **evidence of shape and output**, not a live product.
+
+| Artifact | What it shows |
+|----------|----------------|
+| [examples/sample_run_log.txt](examples/sample_run_log.txt) | Anonymized console trace: stages through **`Notion: scanned=…`** (typical `--once` + sync). |
+| [examples/notion_pipeline_screenshot.png](examples/notion_pipeline_screenshot.png) | **Mock** Notion-style deals table (URLs / emails **redacted** in bars — representative layout only). |
+| [examples/sample_screening_output.md](examples/sample_screening_output.md) | Anonymized text summary of a screening result. |
+
+**Read-only Notion duplicate (optional, best for reviewers):** publish or duplicate your CRM view as **read-only** and add the link here once available — *`https://www.notion.so/...`* (repo owner: replace with your public URL in this README when ready).
+
+After you publish, you can also set the repo **Website** field on GitHub to that same Notion URL.
+
 ## How it works
 
 | Gate | What it does |
@@ -54,6 +68,10 @@ Pipeline produces a structured Notion table with columns:
 **Deal name → Status → Investment thesis (Yes/No) → Rationale → Mandate fit → Source**
 
 Each deal page contains a full memo: company snapshot, email content, deck OCR, web crawl, and (if available) founder call notes.
+
+**Layout (sanitized mock — not live data):**
+
+![Notion-style deals table (redacted)](examples/notion_pipeline_screenshot.png)
 
 ## Docs
 
