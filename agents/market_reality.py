@@ -1,4 +1,4 @@
-"""Heuristic market reality check from extracted facts (caps align with SCREENING_RUBRIC.md)."""
+"""Heuristic market reality check from extracted facts (caps align with docs/SCREENING_RUBRIC.md)."""
 
 from __future__ import annotations
 

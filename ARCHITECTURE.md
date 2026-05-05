@@ -201,8 +201,14 @@ fund_AI/
 │
 ├── main.py                      # Entry point — CLI, polling loop
 ├── ARCHITECTURE.md              # Ten dokument
-├── PRD.md                       # Product requirements
+├── APPLICATION_NOTE.md         # Kontekst aplikacyjny (artefakt rekrutacyjny)
+├── APPLICATION_USE_CASES.md    # Use cases pod VC ops
 ├── requirements.txt
+├── docs/
+│   ├── PRD.md                   # Product requirements
+│   ├── LLM_SCREENING_SPEC.md
+│   ├── SCREENING_RUBRIC.md
+│   └── …                        # CURSOR_NOTION_INSTRUCTIONS, scorecard, itd.
 ├── .env                         # Konfiguracja (nie commitować)
 ├── credentials.json             # Gmail OAuth credentials
 ├── token.json                   # Gmail OAuth token (auto)

@@ -23,7 +23,7 @@ Poniższe zasady są obowiązkowym baseline dla całego produktu i wszystkich zm
 
 Ten plik jest **kontraktem produktowym**, nie README repo: opisuje *dlaczego* i *co ma być dowiezione*. **Indeks canonical** (appendix) wskazuje pliki jako źródło prawdy — żeby nie dublować dokumentacji technicznej na początku lektury.
 
-Szczegóły modułów i uruchomienie → **[ARCHITECTURE.md](ARCHITECTURE.md)**
+Szczegóły modułów i uruchomienie → **[ARCHITECTURE.md](../ARCHITECTURE.md)**
 
 ### Reguła canonical (PRD vs kod vs implementacja)
 
@@ -236,7 +236,7 @@ Pełny scorecard wymiarów i rationale leżą w **SQLite** (`gate2_dimensions_js
 
 ### Limity kosztowe i tokenów (kontrakt produktowy)
 
-Wartości domyślne i env → **`config/llm_cost.py`** oraz **[ARCHITECTURE.md](ARCHITECTURE.md)**.
+Wartości domyślne i env → **`config/llm_cost.py`** oraz **[ARCHITECTURE.md](../ARCHITECTURE.md)**.
 
 Upsert strony po **`message_id`** tam gdzie dostępne. Szczegóły pól dla operatorów → `CURSOR_NOTION_INSTRUCTIONS.md` o ile jest aktualny względem kodu; przy rozbieżnościach **wygrywa** `notion_sync.py`.
 
