@@ -47,8 +47,8 @@ Inbound pitch decków i leadów ze stron to chaos. Partner nie może poświęci�
 
 | Użytkownik | Rola |
 |------------|------|
-| Operator (wewnętrzny) | Primary user — faza testowa |
-| Partner fundu | Docelowy primary user — partner fundu |
+| Operator (wewnętrzny) | Konfiguracja, QA pipeline, pierwsza linia przy inboundie |
+| Partner fundu | Docelowy użytkownik decyzyjny — werdykt inwestycyjny |
 
 **Zasada:** system jest asystentem decyzyjnym, nie decydentem. Komunikacja outbound do founderów wymaga człowieka.
 

@@ -32,7 +32,7 @@ Zostawić człowiekowi tylko decyzje, których AI nie powinna podejmować samodz
 ## Architektura — przegląd
 
 ```
-Gmail (tylko `ALLOWED_SENDER` z `.env`)
+Gmail (only inbox / sender allowed by `ALLOWED_SENDER` in `.env`)
         │
         ▼
 ┌──────────────────────────────────────────────────┐
@@ -197,7 +197,7 @@ Każdy wymiar ma: **score** (1-10) + **reasoning** (cytat/dowód z decku).
 ## Struktura plików
 
 ```
-fund_AI/
+screening_agent/
 │
 ├── main.py                      # Entry point — CLI, polling loop
 ├── ARCHITECTURE.md              # Ten dokument
@@ -259,7 +259,7 @@ pip install -r requirements.txt
 python setup_gmail.py           # OAuth z Google
 
 # 2. Uzupełnij .env
-OPENAI_API_KEY=...# ustaw w .env, nie w repo
+OPENAI_API_KEY=...              # z panelu OpenAI — nie commituj
 ALLOWED_SENDER=your-inbox@example.com
 
 # 3. Test na lokalnym PDF
@@ -294,8 +294,8 @@ python main.py assess-url https://example.com
 | `GMAIL_CREDENTIALS_PATH` | `credentials.json` | OAuth credentials |
 | `GMAIL_TOKEN_PATH` | `token.json` | OAuth token (auto) |
 | `GMAIL_USER_EMAIL` | — | Twój email |
-| `ALLOWED_SENDER` | � | **Ustaw w `.env`** |
-| `REVIEWER_NAME` | `Adrian` | Imię w emailach |
+| `ALLOWED_SENDER` | — | **Wymagane** w produkcji — adres nadawcy, z którego przychodzi pitch (tylko ten inbox jest skanowany w domyślnej konfiguracji) |
+| `REVIEWER_NAME` | `Partner` | Imię / podpis w szkicach emaili |
 | `CALENDLY_LINK` | — | Link do bookingu |
 | `POLLING_INTERVAL_MINUTES` | `15` | Jak często sprawdza Gmail |
 | `GATE2_PASS_THRESHOLD` | `6.0` | Minimalny score Gate 2 |

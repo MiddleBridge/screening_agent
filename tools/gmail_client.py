@@ -17,7 +17,8 @@ SCOPES = [
     "https://www.googleapis.com/auth/gmail.labels",
 ]
 
-ALLOWED_SENDER = os.getenv("ALLOWED_SENDER", "REDACTED_LEGACY_DEFAULT@example.com")
+# Must match your pipeline inbox in .env — no real default (example only).
+ALLOWED_SENDER = os.getenv("ALLOWED_SENDER", "you@example.com")
 PITCH_DECK_QUERY = os.getenv(
     "PITCH_DECK_QUERY",
     f"from:{ALLOWED_SENDER} has:attachment filename:pdf",
