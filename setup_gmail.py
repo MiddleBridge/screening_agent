@@ -67,7 +67,7 @@ def run_setup():
                 f"GMAIL_PROCESSED_LABEL=Fund/Screened\n"
                 f"GMAIL_USER_EMAIL={user_email}\n"
                 f"REVIEWER_EMAIL={user_email}\n"
-                f"REVIEWER_NAME=Adrian\n"
+                f"REVIEWER_NAME=user\n"
                 f"CALENDLY_LINK=\n"
                 f"POLLING_INTERVAL_MINUTES=15\n"
                 f"GATE2_PASS_THRESHOLD=6.0\n"

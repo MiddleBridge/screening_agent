@@ -1,4 +1,4 @@
-inovo_thesis:
+fund_thesis:
   # Keep these as fund-level "knobs" — routing logic reads this file.
   # Update to your current fund thesis without touching code.
 
