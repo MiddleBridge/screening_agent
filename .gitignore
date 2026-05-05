@@ -1,0 +1,46 @@
+# Secrets & local env
+.env
+.env.local
+credentials.json
+token.json
+*.pem
+
+# Python
+venv/
+venv_old39/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# OS & IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+.claude/
+
+# Logs & runtime data
+logs/
+*.log
+*.db
+*.sqlite*
+
+# Mis-saved deck PDFs at repo root (UUID-shaped filename, no .pdf suffix)
+/????????-????-????-????-????????????
+
+# Heavy / local artifacts (deck PDFs, exports, drafts)
+*.pdf
+*.docx
+*.zip
+*.eml
+*-ExportBlock-*
+
+# Local extraction / run outputs (may contain confidential deck content)
+artifacts/
+tmp/
