@@ -16,9 +16,12 @@ The pipeline is a **local CLI**: it expects your own **API keys** and (for full 
 | [examples/notion_pipeline_screenshot.png](examples/notion_pipeline_screenshot.png) | **Mock** Notion-style deals table (URLs / emails **redacted** in bars — representative layout only). |
 | [examples/sample_screening_output.md](examples/sample_screening_output.md) | Anonymized text summary of a screening result. |
 
-**Read-only Notion duplicate (optional, best for reviewers):** publish or duplicate your CRM view as **read-only** and add the link here once available — *`https://www.notion.so/...`* (repo owner: replace with your public URL in this README when ready).
+**Public pipeline view (read-only Notion Site):**  
+https://triangular-marlin-23b.notion.site/34db6499819080cf9a57f33de6e2662d?v=34db64998190808c9937000c1a7ff01a
 
-After you publish, you can also set the repo **Website** field on GitHub to that same Notion URL.
+(This replaces a private workspace view — safe for reviewers; no API keys required to **view**.)
+
+The repo **Website** on GitHub is set to the same URL for one-click access.
 
 ## How it works
 
@@ -63,6 +66,8 @@ python main.py --once   # single polling run
 Requires Python 3.9+, Tesseract (for PDF OCR), Gmail OAuth credentials.
 
 ## Example output (Notion)
+
+**Live read-only table (sanitized duplicate):** [Open in Notion](https://triangular-marlin-23b.notion.site/34db6499819080cf9a57f33de6e2662d?v=34db64998190808c9937000c1a7ff01a)
 
 Pipeline produces a structured Notion table with columns:
 **Deal name → Status → Investment thesis (Yes/No) → Rationale → Mandate fit → Source**
