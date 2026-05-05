@@ -13,7 +13,9 @@ The pipeline is a **local CLI**: it expects your own **API keys** and (for full 
 | Artifact | What it shows |
 |----------|----------------|
 | [examples/sample_run_log.txt](examples/sample_run_log.txt) | Anonymized console trace: stages through **`Notion: scanned=…`** (typical `--once` + sync). |
-| [examples/notion_pipeline_screenshot.png](examples/notion_pipeline_screenshot.png) | **Mock** Notion-style deals table (URLs / emails **redacted** in bars — representative layout only). |
+| [examples/notion_pipeline_screenshot.png](examples/notion_pipeline_screenshot.png) | **Real** Notion database table (pipeline / deals list after sync). |
+| [examples/notion_deal_page_sample.png](examples/notion_deal_page_sample.png) | Sample **deal record** in Notion (row-level properties). |
+| [examples/notion_deal_memo_sample.png](examples/notion_deal_memo_sample.png) | Sample **on-page memo** (snapshot, sources, LLM cost, traction). |
 | [examples/sample_screening_output.md](examples/sample_screening_output.md) | Anonymized text summary of a screening result. |
 
 **Public pipeline view (read-only Notion Site):**  
@@ -74,9 +76,21 @@ Pipeline produces a structured Notion table with columns:
 
 Each deal page contains a full memo: company snapshot, email content, deck OCR, web crawl, and (if available) founder call notes.
 
-**Layout (sanitized mock — not live data):**
+**Screenshots from Notion (actual UI — not the old AI CRM placeholder):**
 
-![Notion-style deals table (redacted)](examples/notion_pipeline_screenshot.png)
+1. Pipeline **table** view:
+
+![Notion pipeline table](examples/notion_pipeline_screenshot.png)
+
+2. **Deal record** (properties):
+
+![Notion deal properties](examples/notion_deal_page_sample.png)
+
+3. **Deal memo** body (structured sections):
+
+![Notion deal memo](examples/notion_deal_memo_sample.png)
+
+*(The first repo image used to be a generated “Deals / Acme Robotics” CRM mock — that was **not** Notion; it is replaced by the shots above.)*
 
 ## Docs
 
