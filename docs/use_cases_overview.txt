@@ -1,0 +1,192 @@
+================================================================================
+fund.VC — TOP HIGH-VALUE USE CASES (application-oriented version)
+Description for role: Analyst (Sourcing & Ops)
+Generated: 2026-04-28
+================================================================================
+
+0) TL;DR
+--------
+This system is an operational copilot for a VC partner that:
+  • speeds up inbound screening (email/deck + website),
+  • turns messy intake into decisions and next steps,
+  • maintains a single operational view in Notion,
+  • keeps humans on the critical decisions (HITL).
+
+Below, use cases are clearly separated with their components.
+
+
+1) USE CASE 1 — Inbound founder screening (email/deck) end-to-end
+------------------------------------------------------------------
+Problem:
+  Lots of inbound, limited partner time. Manual triage slows sourcing.
+
+Business value:
+  Faster first screen, fewer dropped balls, consistent evaluation quality.
+
+Use case composition:
+  A) Input:
+     - Gmail OAuth2 + emails with pitch deck PDF.
+  B) Processing:
+     - Gate 0: cheap prefilter (non-pitch/legal).
+     - Gate 1: quick fit check (geography/stage/sector + confidence).
+     - Gate 2: deck analysis (facts, scorecard, risks, summary).
+     - Gate 3: HITL (Approve/Reject/Skip).
+  C) Output:
+     - write record to pipeline.db,
+     - brief for partner,
+     - optional reply draft in Gmail (no auto-send).
+  D) Guardrails:
+     - idempotency on message_id,
+     - PDF and token limits,
+     - final investment decision remains with humans.
+
+Key modules:
+  main.py, agents/screener.py, tools/gmail_client.py, tools/pdf_utils.py,
+  hitl/terminal.py, storage/database.py
+
+
+2) USE CASE 2 — Decision support + pipeline memory (Notion sync)
+-----------------------------------------------------------------
+Problem:
+  Even good screening loses value if results do not land in a readable operational system.
+
+Business value:
+  Partner gets a “decision-ready view” in one place: snapshot, fit, risks, follow-ups.
+
+Use case composition:
+  A) Input:
+     - rows from pipeline.db (Gate 1/2/2.5 outputs + decisions).
+  B) Processing:
+     - field mapping to Notion DB (upsert by Message ID),
+     - building deal page sections (decision, fit, snapshot, risks, open questions, evidence),
+     - deterministic updates without an extra LLM at sync time.
+  C) Output:
+     - operational Notion table (status + score + sector + date),
+     - company page with full investment memo.
+  D) Guardrails:
+     - idempotent update/create,
+     - protection of manual partner notes,
+     - schema-safe property mapping.
+
+Key modules:
+  agents/notion_sync.py, storage/database.py
+
+
+3) USE CASE 3 — Reporting and operating cadence (weekly ops loop)
+----------------------------------------------------------------
+Problem:
+  Without fast reporting it is hard to manage the funnel and priorities.
+
+Business value:
+  Shorter partner ↔ pipeline feedback loop, better prioritization of top deals.
+
+Use case composition:
+  A) Input:
+     - historical rows from pipeline.db.
+  B) Processing:
+     - aggregate funnel stats (statuses, sectors, geographies, top deals),
+     - period report (e.g. 7 days).
+  C) Output:
+     - text operational report for quick review.
+  D) Guardrails:
+     - report uses the same data model as screening,
+     - auditable by message_id.
+
+Key modules:
+  main.py (--report), agents/reporter.py, storage/database.py
+
+
+4) Why this use-case set is “high-value” for Analyst (Sourcing & Ops)
+-----------------------------------------------------------------------
+  • combines sourcing + first screens + decision support + ops hygiene in one workflow,
+  • strengthens same-day loops and limits operational chaos,
+  • produces reusable templates (briefs, statuses, follow-ups, call notes),
+  • is AI-native but with a safe human boundary on the final decision.
+
+
+5) Short command map (proof it runs)
+-------------------------------------
+  python main.py --once
+      One-off inbound email/deck screening.
+
+  python main.py assess-url https://example.com
+      Website-only screening.
+
+  python main.py --report --days 7
+      Pipeline operational report.
+
+  python main.py --sync-notion --days 30
+      Sync rows to Notion.
+
+
+6) Operational detail for UC3 (Weekly report) — how to read it
+--------------------------------------------------------------
+Usefulness:
+  Yes, the report is useful as a weekly operational heartbeat.
+  It is not yet a “partner memo” — it is a funnel management tool.
+
+What the report provides today:
+  A) Funnel:
+     - where inbound drops (Gate 1 vs Gate 2 vs error),
+     - how many actually progressed.
+  B) Priorities:
+     - top deals by score,
+     - “consider now” vs “not fit now” lists.
+  C) Ops quality:
+     - share of PDF/extraction failures,
+     - share of pipeline errors.
+  D) Efficiency:
+     - estimated API cost,
+     - average latency Gate 1 and Gate 2.
+
+How to read the sample report:
+  - 31 inbound / 13 rejections at Gate 2 (41%) → main quality bottleneck is after deck analysis.
+  - 0 approved → no deals ready for final “yes” that week.
+  - large share of “NEEDS_DECK” and “unknown” rows → input completeness and data hygiene issues.
+  - top deal scores < 6/10 → no obvious “must-call” shortlist.
+
+Current limitations (important for communication):
+  - duplicate companies in rankings (e.g. multiple rows for the same company),
+  - inconsistent sector/geo labels (e.g. Fintech vs fintech),
+  - test/placeholder rows polluting the view (unknown, Example Domain),
+  - no per-company “actionable next steps” section.
+
+What would raise the report to partner-grade (next steps):
+  1. Deduplicate by company/domain + normalize categories.
+  2. Filter tests and empty rows out of the weekly view.
+  3. “Top 5 actions this week” section:
+     - Request deck,
+     - Founder call,
+     - Reject with reason,
+     - Follow-up owner + deadline.
+  4. Week-over-week delta:
+     - changes in conversion and cost per deal.
+
+
+7) UC3 Meeting Notes (Fireflies/Calendly → Notion)
+--------------------------------------------------------------
+Usefulness:
+  UC3 closes the loop after a founder call: every call attaches to the company page.
+
+What is implemented:
+  - one-shot call sync to Notion: `python main.py sync-call ...`
+  - `Founder Calls` section on the company page,
+  - deduplication by `call_id`,
+  - optional task creation in a separate database (`NOTION_TASKS_DATABASE_ID`),
+  - multiple calls for the same company land on one company page (one deal “subpage”).
+
+Call entry format:
+  - meeting header (`YYYY-MM-DD — title (source)`),
+  - bullet: date + attendees,
+  - bullet: summary,
+  - bullet: link to transcript/recording.
+
+“Auto webhook” scope (next step):
+  - current mode is one-shot CLI trigger,
+  - Fireflies/Calendly webhooks can hook into the same mechanism without changing the data model.
+
+
+================================================================================
+End of file. Technical details and full architecture:
+see README.md and docs/PRD.md in this repository.
+================================================================================

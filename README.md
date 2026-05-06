@@ -6,6 +6,8 @@ Reads inbound pitch emails (Gmail + PDF deck), runs multi-gate screening against
 
 Built for a CEE-focused seed fund mandate (configurable in `config/fund_thesis.py`).
 
+**What this file is:** a reviewer-facing overview—demo artifacts, gates, integrations, and quick start. It does **not** replace the full product contract. For depth, use the [documentation map](#documentation-map) below (start with **PRD** + **ARCHITECTURE**).
+
 ## Demo (this is not plug-and-play)
 
 The pipeline is a **local CLI**: it expects your own **API keys** and (for full flow) **Gmail OAuth** + **Notion** tokens in `.env`. There is no hosted “Try it” button — reviewers should treat the files below as **evidence of shape and output**, not a live product.
@@ -71,10 +73,7 @@ Requires Python 3.9+, Tesseract (for PDF OCR), Gmail OAuth credentials.
 
 **Live read-only table (sanitized duplicate):** [Open in Notion](https://triangular-marlin-23b.notion.site/34db6499819080cf9a57f33de6e2662d?v=34db64998190808c9937000c1a7ff01a)
 
-Pipeline produces a structured Notion table with columns:
-**Deal name → Status → Investment thesis (Yes/No) → Rationale → Mandate fit → Source**
-
-Each deal page contains a full memo: company snapshot, email content, deck OCR, web crawl, and (if available) founder call notes.
+Sync maps each SQLite deal to a **Notion database row** plus a **child page memo** (structured sections: snapshot, sources, costs/telemetry, deck/website markdown, founder calls, etc.). The exact **property set and table layout** depend on sync mode and schema helpers in `agents/notion_sync.py`; the intended operating semantics and acceptance-style notes are in **`docs/PRD.md`** (Notion section) and contributor layout rules in **`docs/CURSOR_NOTION_INSTRUCTIONS.md`**. Treat the public site as **illustrative** of shape, not a guarantee of every column name in your own workspace.
 
 **Screenshots from Notion (actual UI — not the old AI CRM placeholder):**
 
@@ -97,4 +96,20 @@ Each deal page contains a full memo: company snapshot, email content, deck OCR, 
 - [APPLICATION_NOTE.md](APPLICATION_NOTE.md) — context on this project as an application artifact
 - [APPLICATION_USE_CASES.md](APPLICATION_USE_CASES.md) — top AI use cases for VC workflows
 - [ARCHITECTURE.md](ARCHITECTURE.md) — technical architecture and data flows
-- [docs/](docs/) — PRD, screening rubric, scorecard, detailed specs
+- [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) — prototype boundaries (no auto-send, not production-hardened, etc.)
+
+### Documentation map
+
+| Document | What you get |
+|----------|----------------|
+| [docs/PRD.md](docs/PRD.md) | Full product contract: gates, pipeline states, Notion/Fireflies, non-goals, acceptance notes |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | End-to-end flow diagram, stack, costs, env vars, file layout |
+| [docs/LLM_SCREENING_SPEC.md](docs/LLM_SCREENING_SPEC.md) | Per-gate **analytical question map** (what each LLM stage must answer) |
+| [docs/SCREENING_RUBRIC.md](docs/SCREENING_RUBRIC.md) | Dimension scoring rubric (1–10 semantics) |
+| [docs/SCREENING_SCORECARD.md](docs/SCREENING_SCORECARD.md) | Scorecard structure / partner-facing summary of dimensions |
+| [docs/CURSOR_NOTION_INSTRUCTIONS.md](docs/CURSOR_NOTION_INSTRUCTIONS.md) | Notion subpage contract, upsert rules, known sync pitfalls |
+| [docs/use_cases_overview.txt](docs/use_cases_overview.txt) | Short narrative use-case list (Analyst / Sourcing & Ops) |
+| [docs/PRODUCT_REQUIREMENTS.md](docs/PRODUCT_REQUIREMENTS.md) | Stub pointer → canonical **PRD.md** |
+| [docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md) | Stub pointer → root **ARCHITECTURE.md** |
+
+**Suggested reading order for a thorough review:** `README` (this page) → `docs/PRD.md` → `ARCHITECTURE.md` → `docs/LLM_SCREENING_SPEC.md` → `docs/SCREENING_RUBRIC.md`, then skim `agents/` as needed.
