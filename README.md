@@ -6,7 +6,7 @@ Reads inbound pitch emails (Gmail + PDF deck), runs multi-gate screening against
 
 Built for a CEE-focused seed fund mandate (configurable in `config/fund_thesis.py`).
 
-**What this file is:** a reviewer-facing overview—demo artifacts, gates, integrations, and quick start. It does **not** replace the full product contract. For depth, use the [documentation map](#documentation-map) below (start with **PRD** + **ARCHITECTURE**).
+**What this file is:** a short landing page—demo, gates summary, quick start. **End-to-end order (intake → gates → SQLite → optional Notion):** [docs/PIPELINE_FLOW.md](docs/PIPELINE_FLOW.md). **Full doc index by category / role:** [docs/README.md](docs/README.md).
 
 ## Demo (this is not plug-and-play)
 
@@ -54,7 +54,7 @@ tools/        — Gmail, PDF/OCR, web crawl
 storage/      — SQLite pipeline.db
 config/       — prompts, scoring weights, LLM cost tracking
 tests/        — unit tests
-docs/         — PRD, detailed specs, rubrics, scorecard
+docs/         — index: docs/README.md; chronology: docs/PIPELINE_FLOW.md; PRD, specs, rubrics
 ```
 
 ## Quick start
@@ -91,25 +91,16 @@ Sync maps each SQLite deal to a **Notion database row** plus a **child page memo
 
 *(The first repo image used to be a generated “Deals / Acme Robotics” CRM mock — that was **not** Notion; it is replaced by the shots above.)*
 
-## Docs
+## Documentation
 
-- [APPLICATION_NOTE.md](APPLICATION_NOTE.md) — context on this project as an application artifact
-- [APPLICATION_USE_CASES.md](APPLICATION_USE_CASES.md) — top AI use cases for VC workflows
-- [ARCHITECTURE.md](ARCHITECTURE.md) — technical architecture and data flows
-- [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) — prototype boundaries (no auto-send, not production-hardened, etc.)
+| Start here | Purpose |
+|------------|---------|
+| [docs/PIPELINE_FLOW.md](docs/PIPELINE_FLOW.md) | **Chronological** pipeline—fetch order, each gate, DB write, optional Notion / Fireflies |
+| [docs/README.md](docs/README.md) | **Category index**—product vs runtime vs integrations; reading paths by role |
+| [docs/PRD.md](docs/PRD.md) | Full product contract |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Diagram, stack, env vars, LLM vs Tavily/SerpAPI |
+| [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) | Prototype boundaries |
 
-### Documentation map
+Context (repo root): [APPLICATION_NOTE.md](APPLICATION_NOTE.md), [APPLICATION_USE_CASES.md](APPLICATION_USE_CASES.md).
 
-| Document | What you get |
-|----------|----------------|
-| [docs/PRD.md](docs/PRD.md) | Full product contract: gates, pipeline states, Notion/Fireflies, non-goals, acceptance notes |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | End-to-end flow diagram, stack, costs, env vars, file layout |
-| [docs/LLM_SCREENING_SPEC.md](docs/LLM_SCREENING_SPEC.md) | Per-gate **analytical question map** (what each LLM stage must answer) |
-| [docs/SCREENING_RUBRIC.md](docs/SCREENING_RUBRIC.md) | Dimension scoring rubric (1–10 semantics) |
-| [docs/SCREENING_SCORECARD.md](docs/SCREENING_SCORECARD.md) | Scorecard structure / partner-facing summary of dimensions |
-| [docs/CURSOR_NOTION_INSTRUCTIONS.md](docs/CURSOR_NOTION_INSTRUCTIONS.md) | Notion subpage contract, upsert rules, known sync pitfalls |
-| [docs/use_cases_overview.txt](docs/use_cases_overview.txt) | Short narrative use-case list (Analyst / Sourcing & Ops) |
-| [docs/PRODUCT_REQUIREMENTS.md](docs/PRODUCT_REQUIREMENTS.md) | Stub pointer → canonical **PRD.md** |
-| [docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md) | Stub pointer → root **ARCHITECTURE.md** |
-
-**Suggested reading order for a thorough review:** `README` (this page) → `docs/PRD.md` → `ARCHITECTURE.md` → `docs/LLM_SCREENING_SPEC.md` → `docs/SCREENING_RUBRIC.md`, then skim `agents/` as needed.
+All other spec files (LLM map, rubric, Notion contract, stubs) are listed under [docs/README.md](docs/README.md).
